@@ -109,7 +109,7 @@ fun ConverterSplashScreen() {
 
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            text = "By Vamshi",
+            text = "",
             color = Color.White,
             style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
 

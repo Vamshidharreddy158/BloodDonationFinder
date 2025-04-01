@@ -1,8 +1,10 @@
 package com.example.blooddonation
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -45,6 +47,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.firebase.database.FirebaseDatabase
 
 class JoinAppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +63,7 @@ class JoinAppActivity : ComponentActivity() {
 fun JoinAppScreen() {
     var userName by remember { mutableStateOf("") }
     var userEmail by remember { mutableStateOf("") }
-    var userWork by remember { mutableStateOf("") }
+    var userBloodGroup by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
 
     val context = LocalContext.current as Activity
@@ -120,6 +123,7 @@ fun JoinAppScreen() {
                 focusedBorderColor = Color.Yellow,
                 unfocusedBorderColor = Color.Yellow,
                 focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White
                 )
         )
 
@@ -143,6 +147,7 @@ fun JoinAppScreen() {
                 focusedBorderColor = Color.Yellow,
                 unfocusedBorderColor = Color.Yellow,
                 focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White
                 )
         )
 
@@ -152,9 +157,9 @@ fun JoinAppScreen() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp),
-            value = userWork,
-            onValueChange = { userWork = it },
-            placeholder = { Text("What do you do?") },
+            value = userBloodGroup,
+            onValueChange = { userBloodGroup = it },
+            placeholder = { Text("Enter Blood Group") },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Info,
@@ -166,6 +171,7 @@ fun JoinAppScreen() {
                 focusedBorderColor = Color.Yellow,
                 unfocusedBorderColor = Color.Yellow,
                 focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White
                 )
         )
 
@@ -189,6 +195,7 @@ fun JoinAppScreen() {
                 focusedBorderColor = Color.Yellow,
                 unfocusedBorderColor = Color.Yellow,
                 focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White
                 )
         )
 
@@ -196,6 +203,38 @@ fun JoinAppScreen() {
 
         Text(
             modifier = Modifier
+                .clickable {
+                    when {
+                        userName.isEmpty() -> {
+//                            Toast.makeText(context, " Please Enter Mail", Toast.LENGTH_SHORT).show()
+                        }
+
+                        userEmail.isEmpty() -> {
+//                            Toast.makeText(context, " Please Enter Password", Toast.LENGTH_SHORT)
+//                                .show()
+                        }
+                        userBloodGroup.isEmpty() -> {
+//                            Toast.makeText(context, " Please Enter Password", Toast.LENGTH_SHORT)
+//                                .show()
+                        }
+                        userPassword.isEmpty() -> {
+//                            Toast.makeText(context, " Please Enter Password", Toast.LENGTH_SHORT)
+//                                .show()
+                        }
+
+                        else -> {
+                            val donorDetails = DonorDetails(
+                                userName,
+                                userEmail,
+                                userBloodGroup,
+                                userPassword
+                            )
+                            registerUser(donorDetails,context);
+                        }
+
+                    }
+
+                }
                 .width(200.dp)
                 .padding(horizontal = 12.dp)
                 .background(
@@ -241,6 +280,42 @@ fun JoinAppScreen() {
 
     }
 }
+
+fun registerUser(donorDetails: DonorDetails, context: Context) {
+
+    val firebaseDatabase = FirebaseDatabase.getInstance()
+    val databaseReference = firebaseDatabase.getReference("DonorDetails")
+
+    databaseReference.child(donorDetails.emailid.replace(".", ","))
+        .setValue(donorDetails)
+        .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(context, "You Registered Successfully", Toast.LENGTH_SHORT)
+                    .show()
+
+            } else {
+                Toast.makeText(
+                    context,
+                    "Registration Failed",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        .addOnFailureListener { _ ->
+            Toast.makeText(
+                context,
+                "Something went wrong",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+}
+
+data class DonorDetails(
+    var name : String = "",
+    var emailid : String = "",
+    var bloodgroup : String = "",
+    var password: String = ""
+)
 
 @Preview(showBackground = true)
 @Composable

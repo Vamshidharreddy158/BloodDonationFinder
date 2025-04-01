@@ -1,8 +1,10 @@
 package com.example.blooddonation
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -43,6 +45,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.firebase.database.FirebaseDatabase
 
 class EnterAppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,6 +119,7 @@ fun EnterAppScreen() {
                 focusedBorderColor = Color.Yellow,
                 unfocusedBorderColor = Color.Yellow,
                 focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White
             )
         )
 
@@ -139,6 +143,7 @@ fun EnterAppScreen() {
                 focusedBorderColor = Color.Yellow,
                 unfocusedBorderColor = Color.Yellow,
                 focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White
                 )
         )
 
@@ -146,6 +151,30 @@ fun EnterAppScreen() {
 
         Text(
             modifier = Modifier
+                .clickable {
+                    when {
+                        userEmail.isEmpty() -> {
+//                            Toast.makeText(context, " Please Enter Mail", Toast.LENGTH_SHORT).show()
+                        }
+
+                        userPassword.isEmpty() -> {
+//                            Toast.makeText(context, " Please Enter Password", Toast.LENGTH_SHORT)
+//                                .show()
+                        }
+
+                        else -> {
+                            val donorDetails = DonorDetails(
+                                "",
+                                userEmail,
+                                "",
+                                userPassword
+                            )
+
+                            loginUser(donorDetails,context)
+                        }
+
+                    }
+                }
                 .width(200.dp)
                 .padding(horizontal = 12.dp)
                 .background(
@@ -191,6 +220,39 @@ fun EnterAppScreen() {
 
     }
 }
+
+
+fun loginUser(donorDetails: DonorDetails, context: Context) {
+
+    val firebaseDatabase = FirebaseDatabase.getInstance()
+    val databaseReference = firebaseDatabase.getReference("DonorDetails").child(donorDetails.emailid.replace(".", ","))
+
+    databaseReference.get().addOnCompleteListener { task ->
+        if (task.isSuccessful) {
+            val donorData = task.result?.getValue(DonorDetails::class.java)
+            if (donorData != null) {
+                if (donorData.password == donorDetails.password) {
+
+                    Toast.makeText(context, "Login Sucessfully", Toast.LENGTH_SHORT).show()
+
+                } else {
+                    Toast.makeText(context, "Seems Incorrect Credentials", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(context, "Your account not found", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(
+                context,
+                "Something went wrong",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+    }
+}
+
+
 
 @Preview(showBackground = true)
 @Composable
