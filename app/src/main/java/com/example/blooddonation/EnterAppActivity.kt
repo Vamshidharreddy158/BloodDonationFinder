@@ -235,6 +235,7 @@ fun loginUser(donorDetails: DonorDetails, context: Context) {
 
                     Toast.makeText(context, "Login Sucessfully", Toast.LENGTH_SHORT).show()
 
+                    context.startActivity(Intent(context, BloodDonationHome::class.java))
                 } else {
                     Toast.makeText(context, "Seems Incorrect Credentials", Toast.LENGTH_SHORT).show()
                 }
