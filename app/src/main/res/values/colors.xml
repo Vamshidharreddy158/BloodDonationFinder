@@ -12,5 +12,10 @@
 
     <color name="fg_color">#ff9e1f</color>
 
+    <color name="color1">#e3364a</color>
+    <color name="color2">#c8c9fa</color>
+
+    <color name="color3">#f9d7db</color>
+
 
 </resources>
