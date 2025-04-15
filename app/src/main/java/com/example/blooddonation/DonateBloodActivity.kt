@@ -1,6 +1,7 @@
 package com.example.blooddonation
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -46,7 +47,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class DonateBloodActivity : AppCompatActivity() {
+class DonateBloodActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -88,6 +89,9 @@ fun DonateBlood()
             ) {
 
             Icon(
+                modifier = Modifier.clickable {
+
+                },
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Select Contact",
                 tint = Color.White

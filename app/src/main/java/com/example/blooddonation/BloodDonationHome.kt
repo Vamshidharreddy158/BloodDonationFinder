@@ -3,6 +3,7 @@ package com.example.blooddonation
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -41,7 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class BloodDonationHome : AppCompatActivity() {
+class BloodDonationHome : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -54,9 +55,11 @@ class BloodDonationHome : AppCompatActivity() {
 fun BloodDonorHomeActivity()
 {
 
+    val context = LocalContext.current as Activity
 
     Column (
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(color = colorResource(R.color.color3))
     ){
 
@@ -196,6 +199,62 @@ fun BloodDonorHomeActivity()
                             shape = RoundedCornerShape(6.dp)
                         ),
                     text = "Track \nStatus",
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+
+            }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 12.dp)
+        ) {
+
+            Column(
+                modifier = Modifier
+                    .clickable {
+                    context.startActivity(Intent(context, SearchDonorsActivity::class.java))
+
+                    }
+                    .weight(1f)
+                    .background(
+                        color = colorResource(id = R.color.white),
+                        shape = RoundedCornerShape(6.dp)
+                    ),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Image(
+                    modifier = Modifier
+                        .size(48.dp),
+                    painter = painterResource(id = R.drawable.add_participant),
+                    contentDescription = "Add Participant"
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            color = colorResource(id = R.color.color1),
+                            shape = RoundedCornerShape(bottomStart = 6.dp, bottomEnd = 6.dp)
+                        )
+                        .border(
+                            width = 2.dp,
+                            color = colorResource(id = R.color.color1),
+                            shape = RoundedCornerShape(6.dp)
+                        ),
+                    text = "Search Donors",
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = Color.White,
