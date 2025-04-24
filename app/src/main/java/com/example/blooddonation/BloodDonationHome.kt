@@ -74,8 +74,7 @@ fun BloodDonorHomeActivity()
             Column(
                 modifier = Modifier
                     .clickable {
-//                    context.startActivity(Intent(context, SignInActivity::class.java))
-
+                    context.startActivity(Intent(context, SearchDonorActivity::class.java))
                     }
                     .weight(1f)
                     .background(
@@ -108,7 +107,7 @@ fun BloodDonorHomeActivity()
                             color = colorResource(id = R.color.color1),
                             shape = RoundedCornerShape(6.dp)
                         ),
-                    text = "Add Participant",
+                    text = "Search Donors",
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = Color.White,
@@ -198,7 +197,7 @@ fun BloodDonorHomeActivity()
                             color = colorResource(id = R.color.color1),
                             shape = RoundedCornerShape(6.dp)
                         ),
-                    text = "Track \nStatus",
+                    text = "DonationCentre \nLocator",
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = Color.White,
@@ -220,7 +219,7 @@ fun BloodDonorHomeActivity()
             Column(
                 modifier = Modifier
                     .clickable {
-                    context.startActivity(Intent(context, SearchDonorsActivity::class.java))
+                    context.startActivity(Intent(context, SearchDonorActivity::class.java))
 
                     }
                     .weight(1f)

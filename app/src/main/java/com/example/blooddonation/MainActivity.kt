@@ -63,8 +63,18 @@ fun ConverterUserStatusCheck() {
         ConverterSplashScreen()
 
     } else {
-        context.startActivity(Intent(context, EnterAppActivity::class.java))
-        context.finish()
+
+        val currentStatus = BloodDonationData.readLS(context)
+
+        if (currentStatus) {
+            context.startActivity(Intent(context, BloodDonationHome::class.java))
+            context.finish()
+
+        } else {
+            context.startActivity(Intent(context, EnterAppActivity::class.java))
+            context.finish()
+        }
+
     }
 
 }
@@ -93,7 +103,7 @@ fun ConverterSplashScreen() {
             )
 
         }
-        
+
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
@@ -104,7 +114,7 @@ fun ConverterSplashScreen() {
 
             )
 
-        
+
         Spacer(modifier = Modifier.weight(1f))
 
         Text(

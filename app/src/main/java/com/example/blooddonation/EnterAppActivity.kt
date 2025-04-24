@@ -233,6 +233,10 @@ fun loginUser(donorDetails: DonorDetails, context: Context) {
             if (donorData != null) {
                 if (donorData.password == donorDetails.password) {
 
+                    BloodDonationData.writeLS(context, true)
+                    BloodDonationData.writeMail(context, donorData.emailid)
+                    BloodDonationData.writeUserName(context, donorData.name)
+
                     Toast.makeText(context, "Login Sucessfully", Toast.LENGTH_SHORT).show()
 
                     context.startActivity(Intent(context, BloodDonationHome::class.java))
