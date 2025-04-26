@@ -13,6 +13,27 @@
         android:theme="@style/Theme.TextToSpeech"
         tools:targetApi="31">
         <activity
+            android:name=".UserDataActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SupportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EligibilityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DonatioProcessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LocateBloodBanksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateDonorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageDonorsActivity"
+            android:exported="false" />
+        <activity
             android:name=".SearchDonorActivity"
             android:exported="false" />
         <activity
@@ -41,6 +62,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBbjh-tqqnt6bChHRv8ZI9wY0R9w5Z_MSI" />
     </application>
 
 </manifest>

@@ -68,7 +68,7 @@ fun EnterAppScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(
-                color = colorResource(id = R.color.bg_color),
+                color = colorResource(id = R.color.color3),
             ),
     ) {
 
@@ -92,7 +92,8 @@ fun EnterAppScreen() {
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             text = "Blood Donation App",
-            color = Color.White,
+            color = colorResource(id = R.color.fg_color),
+            textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
 
             )
@@ -112,13 +113,13 @@ fun EnterAppScreen() {
                 Icon(
                     imageVector = Icons.Default.Email,
                     contentDescription = "Email Icon",
-                    tint = Color.White
+                    tint = colorResource(id = R.color.fg_color)
                 )
             },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = Color.Yellow,
                 unfocusedBorderColor = Color.Yellow,
-                focusedTextColor = Color.White,
+                focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.White
             )
         )
@@ -136,13 +137,13 @@ fun EnterAppScreen() {
                 Icon(
                     imageVector = Icons.Default.Lock,
                     contentDescription = "Email Icon",
-                    tint = Color.White
+                    tint = colorResource(id = R.color.fg_color)
                 )
             },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = Color.Yellow,
                 unfocusedBorderColor = Color.Yellow,
-                focusedTextColor = Color.White,
+                focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.White
                 )
         )

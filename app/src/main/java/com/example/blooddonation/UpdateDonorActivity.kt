@@ -11,7 +11,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,15 +21,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -51,37 +47,44 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.firebase.database.FirebaseDatabase
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 
-class DonateBloodActivity : ComponentActivity() {
+class UpdateDonorActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            DonateBlood()
+            UpdateDonateBlood()
         }
     }
 }
 
+object SelectedDonor {
+    lateinit var donorData: DonorData
+}
+
 @Composable
-fun DonateBlood() {
-    var fullName by remember { mutableStateOf("") }
+fun UpdateDonateBlood() {
+    var fullName by remember { mutableStateOf(SelectedDonor.donorData.fullname) }
     var dateOfBirth by remember { mutableStateOf("") }
     var bloodGroup by remember { mutableStateOf("") }
-    var phoneNumber by remember { mutableStateOf("") }
-    var userEmail by remember { mutableStateOf("") }
-    var location by remember { mutableStateOf("") }
+    var phoneNumber by remember { mutableStateOf(SelectedDonor.donorData.phoneNumber) }
+    var userEmail by remember { mutableStateOf(SelectedDonor.donorData.email) }
+    var location by remember { mutableStateOf(SelectedDonor.donorData.location) }
 
-    var selectedGroup by remember { mutableStateOf("A+") }
+    var selectedGroup by remember { mutableStateOf(SelectedDonor.donorData.bloodGroup) }
 
-    var donatedBefore by remember { mutableStateOf<String?>(null) }
-    var haveDiseases by remember { mutableStateOf<String?>(null) }
+    var donatedBefore by remember { mutableStateOf<String?>(SelectedDonor.donorData.donatedBefore) }
+    var haveDiseases by remember { mutableStateOf<String?>(SelectedDonor.donorData.anyDiseases) }
+
+    var availabilityText by remember { mutableStateOf<String?>(null) }
+
+    var availability by remember { mutableStateOf<Boolean>(false) }
+
+    var isAvailabilitySelected by remember { mutableStateOf<Boolean>(false) }
+
 
     val context = LocalContext.current as Activity
 
@@ -93,7 +96,7 @@ fun DonateBlood() {
     var selHOD by remember { mutableIntStateOf(0) }
     var selMinute by remember { mutableIntStateOf(0) }
 
-    var dateState by remember { mutableStateOf("") }
+    var dateState by remember { mutableStateOf(SelectedDonor.donorData.dob) }
 
 
     val datePickerDialog = DatePickerDialog(
@@ -112,7 +115,6 @@ fun DonateBlood() {
         calendar.get(Calendar.MONTH),
         calendar.get(Calendar.DAY_OF_MONTH)
     )
-
 
     Column(
         modifier = Modifier
@@ -147,7 +149,7 @@ fun DonateBlood() {
             Text(
                 modifier = Modifier
                     .padding(12.dp),
-                text = "Donate Blood",
+                text = "Update Donor",
                 color = Color.White,
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold
@@ -351,6 +353,69 @@ fun DonateBlood() {
                     Text("No", modifier = Modifier.clickable { haveDiseases = "No" })
                 }
             }
+
+            Text(
+                text = "Availability to donate? ",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            Row {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    RadioButton(
+                        selected = availabilityText=="A",
+                        onClick = {
+                            availabilityText="A"
+                            availability = true
+                            isAvailabilitySelected = true
+
+                        }
+                    )
+                    Text("Yes", modifier = Modifier.clickable {
+                        availabilityText="A"
+                        availability = true
+                        isAvailabilitySelected = true
+
+                    })
+                }
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    RadioButton(
+                        selected = availabilityText=="B",
+                        onClick = {
+                            availabilityText="B"
+                            availability = false
+                            isAvailabilitySelected = true
+
+                        }
+                    )
+                    Text("Not Available", modifier = Modifier.clickable {
+                        availabilityText=="B"
+                        availability = false
+                        isAvailabilitySelected = true
+
+                    })
+                }
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    RadioButton(
+                        selected = availabilityText=="C",
+                        onClick = {
+                            availabilityText="C"
+                            availability = false
+                            isAvailabilitySelected = true
+
+                        }
+                    )
+                    Text(
+                        "No, Already Donated",
+                        modifier = Modifier.clickable {
+                            availabilityText=="C"
+                            availability = false
+                            isAvailabilitySelected = true
+                        })
+                }
+            }
         }
 
         Spacer(modifier = Modifier.height(6.dp))
@@ -358,25 +423,31 @@ fun DonateBlood() {
         Text(
             modifier = Modifier
                 .clickable {
-                    if (fullName.isEmpty()) {
+                    if (fullName.isEmpty() && isAvailabilitySelected) {
                         Toast
                             .makeText(context, "Fields Missing", Toast.LENGTH_SHORT)
                             .show()
                     } else {
 
-                        val donorData = DonorData(
-                            fullname = fullName,
-                            dob = dateState,
-                            bloodGroup = selectedGroup,
-                            phoneNumber = phoneNumber,
-                            email = userEmail,
-                            location = location,
-                            donatedBefore = donatedBefore!!,
-                            anyDiseases = haveDiseases!!,
-                            isAvailable = true
+                        val updateDonor = mapOf(
+                            "donationId" to SelectedDonor.donorData.donationId,
+                            "fullname" to fullName,
+                            "dob" to dateState,
+                            "bloodGroup" to selectedGroup,
+                            "phoneNumber" to phoneNumber,
+                            "email" to userEmail,
+                            "location" to location,
+                            "donatedBefore" to donatedBefore!!,
+                            "anyDiseases" to haveDiseases!!,
+                            "available" to availability
                         )
 
-                        registerDonor(donorData, context)
+                        updateDonor(
+                            SelectedDonor.donorData.donationId,
+                            updateDonor,
+                            context
+                        )
+
                     }
                 }
                 .width(200.dp)
@@ -409,78 +480,30 @@ fun DonateBlood() {
     }
 }
 
-@Composable
-fun BloodGroupSelector(
-    selectedGroup: String,
-    onSelectionChanged: (String) -> Unit
-) {
-    val bloodGroups = listOf("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
+fun updateDonor(donorId: String, updatedData: Map<String, Any>, context: Context) {
 
-    LazyRow(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        items(bloodGroups) { group ->
-            FilterChip(
-                selected = selectedGroup == group,
-                onClick = { onSelectionChanged(group) },
-                label = { Text(group) },
-                modifier = Modifier
-                    .height(40.dp)
-            )
-        }
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun DonateBloodPreview() {
-    DonateBlood()
-}
-
-private fun registerDonor(donorData: DonorData, activityContext: Context) {
-
-    val userEmail = BloodDonationData.readMail(activityContext)
-    val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
-    val orderId = dateFormat.format(Date())
-    donorData.donationId = orderId
-
-    FirebaseDatabase.getInstance().getReference("BloodDonors").child(userEmail.replace(".", ","))
-        .child(orderId).setValue(donorData)
-        .addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Toast.makeText(activityContext, "Donor Added Successfully", Toast.LENGTH_SHORT)
-                    .show()
-                (activityContext as Activity).finish()
-            } else {
+    try {
+        val emailKey = BloodDonationData.readMail(context)
+            .replace(".", ",")
+        val path = "BloodDonors/$emailKey/$donorId"
+        FirebaseDatabase.getInstance().getReference(path).updateChildren(updatedData)
+            .addOnSuccessListener {
                 Toast.makeText(
-                    activityContext,
-                    "Product Addition Failed: ${task.exception?.message}",
+                    context,
+                    "Donor Updated Successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                (context as Activity).finish()
+            }
+            .addOnFailureListener {
+                Toast.makeText(
+                    context,
+                    "Failed to update",
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        }
-        .addOnFailureListener { exception ->
-            Toast.makeText(
-                activityContext,
-                "Product Addition Failed: ${exception.message}",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+    } catch (e: Exception) {
+        Log.e("Test", "Error Message : ${e.message}")
+    }
 }
-
-data class DonorData(
-    var donationId: String = "",
-    var fullname: String = "",
-    var dob: String = "",
-    var bloodGroup: String = "",
-    var phoneNumber: String = "",
-    var email: String = "",
-    var location: String = "",
-    var donatedBefore: String = "",
-    var anyDiseases: String = "",
-    var isAvailable: Boolean = false
-)

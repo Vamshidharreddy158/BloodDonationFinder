@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
@@ -86,7 +87,7 @@ fun ConverterSplashScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(
-                color = colorResource(id = R.color.bg_color),
+                color = colorResource(id = R.color.color3),
             ),
     ) {
 
@@ -109,6 +110,18 @@ fun ConverterSplashScreen() {
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             text = "Blood Donation App",
+            color = colorResource(id = R.color.fg_color),
+            style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
+
+            )
+
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            text = "By\nVamshidhar Reddy",
+            textAlign = TextAlign.Center,
             color = colorResource(id = R.color.fg_color),
             style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
 
