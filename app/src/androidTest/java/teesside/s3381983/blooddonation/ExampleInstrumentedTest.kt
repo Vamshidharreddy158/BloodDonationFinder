@@ -1,4 +1,4 @@
-package com.example.blooddonation
+package teesside.s3381983.blooddonation
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -1,4 +1,4 @@
-package com.example.blooddonation
+package teesside.s3381983.blooddonation
 
 import android.app.Activity
 import android.os.Bundle

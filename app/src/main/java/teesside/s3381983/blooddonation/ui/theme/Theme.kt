@@ -1,4 +1,4 @@
-package com.example.blooddonation.ui.theme
+package teesside.s3381983.blooddonation.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

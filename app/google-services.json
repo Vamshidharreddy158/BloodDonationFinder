@@ -1,15 +1,16 @@
 {
   "project_info": {
     "project_number": "258255759829",
+    "firebase_url": "https://blooddonation-3aa29-default-rtdb.firebaseio.com",
     "project_id": "blooddonation-3aa29",
     "storage_bucket": "blooddonation-3aa29.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:258255759829:android:9de42bf2fdc7b05407b55c",
+        "mobilesdk_app_id": "1:258255759829:android:0d01ea7782d56cf307b55c",
         "android_client_info": {
-          "package_name": "com.example.blooddonation"
+          "package_name": "teesside.s3381983.blooddonation"
         }
       },
       "oauth_client": [],

@@ -1,4 +1,4 @@
-package com.example.blooddonation
+package teesside.s3381983.blooddonation
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -269,14 +269,13 @@ fun DonateBlood() {
             ),
             value = location,
             onValueChange = { location = it },
-            label = { Text("Enter Location") },
+            label = { Text("Enter Area") },
             textStyle = TextStyle(color = colorResource(id = R.color.black)),
 
             )
 
         Spacer(modifier = Modifier.height(6.dp))
 
-//        BloodDonationQuestion1()
 
         Text(
             modifier = Modifier.padding(start = 12.dp),
@@ -321,7 +320,6 @@ fun DonateBlood() {
             }
         }
 
-//        BloodDonationQuestion2()
 
         Column(
             modifier = Modifier
@@ -443,7 +441,7 @@ fun DonateBloodPreview() {
 
 private fun registerDonor(donorData: DonorData, activityContext: Context) {
 
-    val userEmail = BloodDonationData.readMail(activityContext)
+    val userEmail = BloodDonationPreferences.fetchDonorEmail(activityContext)
     val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
     val orderId = dateFormat.format(Date())
     donorData.donationId = orderId

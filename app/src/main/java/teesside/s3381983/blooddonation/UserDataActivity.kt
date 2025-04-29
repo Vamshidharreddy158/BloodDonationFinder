@@ -1,12 +1,10 @@
-package com.example.blooddonation
+package teesside.s3381983.blooddonation
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -37,8 +35,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class UserDataActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -132,7 +128,7 @@ fun UserProfile() {
 
                 Text(
                     modifier = Modifier.padding(start = 12.dp),
-                    text = BloodDonationData.readUserName(context),
+                    text = BloodDonationPreferences.fetchDonorName(context),
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 )
@@ -143,7 +139,7 @@ fun UserProfile() {
 
                 Text(
                     modifier = Modifier.padding(start = 12.dp),
-                    text = BloodDonationData.readMail(context),
+                    text = BloodDonationPreferences.fetchDonorEmail(context),
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 )
@@ -153,7 +149,7 @@ fun UserProfile() {
                 Text(
                     modifier = Modifier
                         .clickable {
-                            BloodDonationData.writeLS(context, false)
+                            BloodDonationPreferences.saveLoginState(context, false)
 
                             context.startActivity(Intent(context, EnterAppActivity::class.java))
                             (context as Activity).finish()

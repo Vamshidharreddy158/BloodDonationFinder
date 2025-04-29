@@ -1,4 +1,4 @@
-package com.example.blooddonation
+package teesside.s3381983.blooddonation
 
 import android.app.Activity
 import android.content.Intent
@@ -65,7 +65,7 @@ class ManageDonorsActivity : ComponentActivity() {
 @Composable
 fun MyDonors() {
     val context = LocalContext.current as Activity
-    val userEmail = BloodDonationData.readMail(context)
+    val userEmail = BloodDonationPreferences.fetchDonorEmail(context)
     var donorsList by remember { mutableStateOf(listOf<DonorData>()) }
     var loadDonors by remember { mutableStateOf(true) }
 

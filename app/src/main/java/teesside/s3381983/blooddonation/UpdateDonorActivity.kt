@@ -1,4 +1,4 @@
-package com.example.blooddonation
+package teesside.s3381983.blooddonation
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -483,7 +483,7 @@ fun UpdateDonateBlood() {
 fun updateDonor(donorId: String, updatedData: Map<String, Any>, context: Context) {
 
     try {
-        val emailKey = BloodDonationData.readMail(context)
+        val emailKey = BloodDonationPreferences.fetchDonorEmail(context)
             .replace(".", ",")
         val path = "BloodDonors/$emailKey/$donorId"
         FirebaseDatabase.getInstance().getReference(path).updateChildren(updatedData)

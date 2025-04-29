@@ -1,4 +1,4 @@
-package com.example.blooddonation
+package teesside.s3381983.blooddonation
 
 import android.app.Activity
 import android.content.Intent
@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -138,7 +137,7 @@ fun BloodDonorHomeActivity() {
                             color = colorResource(id = R.color.color1),
                             shape = RoundedCornerShape(6.dp)
                         ),
-                    text = "Search Donors",
+                    text = "Search\nDonors",
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = Color.White,
@@ -235,7 +234,7 @@ fun BloodDonorHomeActivity() {
                             color = colorResource(id = R.color.color1),
                             shape = RoundedCornerShape(6.dp)
                         ),
-                    text = "Blood \nBanks",
+                    text = "Blood\nBanks",
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleMedium.copy(
                         color = Color.White,
@@ -451,7 +450,7 @@ fun BloodDonationCard1() {
                 modifier = Modifier
                     .size(128.dp),
                 painter = painterResource(id = R.drawable.blood_donor),
-                contentDescription = "Dlood donor"
+                contentDescription = "Blood donor"
             )
 
         }

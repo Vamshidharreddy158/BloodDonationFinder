@@ -1,4 +1,4 @@
-package com.example.blooddonation
+package teesside.s3381983.blooddonation
 
 import android.app.Activity
 import android.content.Intent
@@ -71,15 +71,15 @@ class SearchDonorActivity : ComponentActivity() {
 @Composable
 fun SearchDonors() {
     val context = LocalContext.current as Activity
-    val userEmail = BloodDonationData.readMail(context)
+    val userEmail = BloodDonationPreferences.fetchDonorEmail(context)
     var donorsList by remember { mutableStateOf(listOf<DonorData>()) }
     var loadDonors by remember { mutableStateOf(true) }
 
     var searchQuery by remember { mutableStateOf("") }
 
     val filteredDonors = donorsList.filter {
-        it.fullname.contains(searchQuery, ignoreCase = true) ||
-                it.bloodGroup.contains(searchQuery, ignoreCase = true)
+        (it.fullname.contains(searchQuery, ignoreCase = true) ||
+                it.bloodGroup.contains(searchQuery, ignoreCase = true)) && it.isAvailable
     }
 
 
@@ -153,10 +153,10 @@ fun SearchDonors() {
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            pair.forEach { product ->
-                                if (product.isAvailable) {
+                            pair.forEach { donor ->
+                                if (donor.isAvailable) {
                                     Box(modifier = Modifier.weight(1f)) {
-                                        DonorCard(product)
+                                        DonorCard(donor)
                                     }
                                 }
                             }
@@ -244,16 +244,16 @@ fun getDonors(callback: (List<DonorData>) -> Unit) {
 
     databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
-            val productsList = mutableListOf<DonorData>()
+            val donorList = mutableListOf<DonorData>()
 
             for (donorSnapshot in snapshot.children) {
-                for (productSnapShot in donorSnapshot.children) {
-                    val product = productSnapShot.getValue(DonorData::class.java)
-                    product?.let { productsList.add(it) }
+                for (dSnapShot in donorSnapshot.children) {
+                    val donor = dSnapShot.getValue(DonorData::class.java)
+                    donor?.let { donorList.add(it) }
                 }
             }
 
-            callback(productsList)
+            callback(donorList)
         }
 
         override fun onCancelled(error: DatabaseError) {

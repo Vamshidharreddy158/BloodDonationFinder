@@ -6,53 +6,53 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/blood_donation_app"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/blood_donation_app"
         android:supportsRtl="true"
         android:theme="@style/Theme.TextToSpeech"
         tools:targetApi="31">
         <activity
-            android:name=".UserDataActivity"
+            android:name="teesside.s3381983.blooddonation.UserDataActivity"
             android:exported="false" />
         <activity
-            android:name=".SupportActivity"
+            android:name="teesside.s3381983.blooddonation.SupportActivity"
             android:exported="false" />
         <activity
-            android:name=".EligibilityActivity"
+            android:name="teesside.s3381983.blooddonation.EligibilityActivity"
             android:exported="false" />
         <activity
-            android:name=".DonatioProcessActivity"
+            android:name="teesside.s3381983.blooddonation.DonatioProcessActivity"
             android:exported="false" />
         <activity
-            android:name=".LocateBloodBanksActivity"
+            android:name="teesside.s3381983.blooddonation.LocateBloodBanksActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateDonorActivity"
+            android:name="teesside.s3381983.blooddonation.UpdateDonorActivity"
             android:exported="false" />
         <activity
-            android:name=".ManageDonorsActivity"
+            android:name="teesside.s3381983.blooddonation.ManageDonorsActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchDonorActivity"
+            android:name="teesside.s3381983.blooddonation.SearchDonorActivity"
             android:exported="false" />
         <activity
             android:name=".SearchDonorsActivity"
             android:exported="false" />
         <activity
-            android:name=".DonateBloodActivity"
+            android:name="teesside.s3381983.blooddonation.DonateBloodActivity"
             android:exported="false" />
         <activity
-            android:name=".BloodDonationHome"
+            android:name="teesside.s3381983.blooddonation.BloodDonationHome"
             android:exported="false" />
         <activity
-            android:name=".JoinAppActivity"
+            android:name="teesside.s3381983.blooddonation.JoinAppActivity"
             android:exported="false" />
         <activity
-            android:name=".EnterAppActivity"
+            android:name="teesside.s3381983.blooddonation.EnterAppActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="teesside.s3381983.blooddonation.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.TextToSpeech">

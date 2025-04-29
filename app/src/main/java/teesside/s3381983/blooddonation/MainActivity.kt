@@ -1,4 +1,4 @@
-package com.example.blooddonation
+package teesside.s3381983.blooddonation
 
 import android.app.Activity
 import android.content.Intent
@@ -42,13 +42,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ConverterUserStatusCheck()
+            DonorStatus()
         }
     }
 }
 
 @Composable
-fun ConverterUserStatusCheck() {
+fun DonorStatus() {
     val context = LocalContext.current as Activity
     var showSplash by remember { mutableStateOf(true) }
 
@@ -61,13 +61,12 @@ fun ConverterUserStatusCheck() {
     }
 
     if (showSplash) {
-        ConverterSplashScreen()
+        DonorSplashScreen()
 
     } else {
 
-        val currentStatus = BloodDonationData.readLS(context)
 
-        if (currentStatus) {
+        if (BloodDonationPreferences.fetchLoginState(context)) {
             context.startActivity(Intent(context, BloodDonationHome::class.java))
             context.finish()
 
@@ -81,7 +80,7 @@ fun ConverterUserStatusCheck() {
 }
 
 @Composable
-fun ConverterSplashScreen() {
+fun DonorSplashScreen() {
 
     Column(
         modifier = Modifier
@@ -97,7 +96,7 @@ fun ConverterSplashScreen() {
         ) {
 
             Image(
-                painter = painterResource(id = R.drawable.blood_donation), // Replace with your actual SVG drawable
+                painter = painterResource(id = R.drawable.blood_donation_app), // Replace with your actual SVG drawable
                 contentDescription = null,
                 modifier = Modifier
                     .size(100.dp)
@@ -147,6 +146,6 @@ fun ConverterSplashScreen() {
 
 @Preview(showBackground = true)
 @Composable
-fun ConverterSplashScreenPreview() {
-    ConverterSplashScreen()
+fun DonorSplashScreenPreview() {
+    DonorSplashScreen()
 }
